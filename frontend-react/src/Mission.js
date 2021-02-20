@@ -8,7 +8,7 @@ class Mission extends React.Component {
     render() {
         return (
             <div>
-                <h1>something</h1>
+                <p className='text-title'>Mission Statement</p>
             </div>
         )
     }

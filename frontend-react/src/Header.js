@@ -9,11 +9,10 @@ class Header extends React.Component {
     render() {
         return (
             <div id='header'>
-                <img src='images/SDHacks.png' id='logo' />
-                <p id='title' >Political Bias Detector</p>
+                <img src='images/SDHackslogo.png' id='logo' />
             </div>
         )
     }
 }
 
-export default Header
+export default Header;

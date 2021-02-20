@@ -4,11 +4,26 @@ body {
     min-height: 100vh;
     min-width: 100vw;
     overflow-y: hidden;
+    font-family: 'Atkinson';
+}
+
+p {
+    font-family: 'Atkinson';
 }
 
 @font-face {
     font-family: 'Atkinson';
     src: url('./assets/fonts/Atkinson-Hyperlegible-Regular-102.otf');
+}
+
+@font-face {
+    font-family: 'Helvetica Bold';
+    src: url('./assets/fonts/Helvetica-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Helvetica Regular';
+    src: url('./assets/fonts/Helvetica.ttf');
 }
 
 a {
@@ -23,19 +38,31 @@ a:visited {
 
 #app {
     display: grid;
-    grid-template-columns: 1fr 6fr;
-    grid-template-rows: 1fr 5fr;
+    grid-template-columns: 0.2fr 1fr 6fr;
+    grid-template-rows: 1fr 1.5fr 1.5fr 1.5fr;
     height: 100vh;
+}
+
+#main-container {
+    margin: 10px;
+    grid-row-start: 2;
+    grid-row-end: 5;
+    grid-column-start: 3;
+    grid-column-end: 4;
 }
 
 #sidebar {
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr 8fr;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-template-rows: 1fr 1fr 1fr;
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
     margin-top: 10px;
-    border-left: 5px black solid;
+    border-left: 2px rgb(163, 163, 163) solid;
 }
 
 #header {
@@ -45,6 +72,7 @@ a:visited {
     grid-row-end: 2;
     display: flex;
     flex-direction: column;
+    margin-left: 20px;
 }
 
 #logo {
@@ -52,44 +80,32 @@ a:visited {
     margin-bottom: 0;
 }
 
-#title {
-    margin-top: 0;
-    margin-bottom: 0;
+.navbar-list-item {
+    font-size: 25px;
     margin-left: 10px;
-    font-size: 40px;
+    align-self: center;
+    justify-self: left;
+    transition: 0.3s all;
+    position: relative;
+    font-family: 'Atkinson';
+    font-style: italic;
+    padding-left: 20px;
+    opacity: 0.3;
+}
+
+.navbar-list-item-active {
+    transition: 0.3s all;
+    margin-left: 30px;
+    opacity: 0.8;
+    cursor: default;
+}
+
+.text-title {
+    font-size: 50px;
+    margin: 0;
     padding: 0;
 }
 
-.navbar-list-element {
-    padding-left: 1vw;
-    padding-right: 1vw;
-    position: relative;
-    display: inline;
-    justify-self: left;
-    font-size: 20px;
-}
-
-.navbar-list-element::after {
-    content: '';
-    display: block;
-    position: absolute;
-    height: 2px;
-    width: 0%;
-    transition: 0.3s all;
-    background-color: black;
-    opacity: 0;
-    left: 15px;
-}
-
-.navbar-list-element-active {
-    opacity: 0.6;
-}
-
-.navbar-list-element:hover::after {
-    width: 90%;
-    opacity: 1;
-}
-
-#analysis {
-    margin: 10px;
+.text-body {
+    font-size: 18;
 }
