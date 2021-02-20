@@ -7,5 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Finn St. John, Elliot Lee, Shantelle Megan Serafin",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^8.2.9",
+    "firebase-tools": "^9.4.0",
+    "puppeteer": "^7.1.0"
+  }
 }
