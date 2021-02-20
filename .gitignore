@@ -1,7 +1,7 @@
 automl/node_modules
 #automl/democratic/*
 #automl/republican/*
-#automl/convote_v1.1/*
+automl/convote_v1.1/*
 #automl/conservative.txt
 #automl/liberal.txt
 

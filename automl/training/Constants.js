@@ -1,4 +1,4 @@
-exports.INPUT_LOC = "../dataset/democratic";
+exports.INPUT_LOC = "../dataset/republican";
 exports.OUTPUT_LOC = "./training_labels.csv";
-exports.CLASSIFICATION = "Democratic";
-exports.LOOP_LIMITER = 10;
+exports.CLASSIFICATION = "Republican"; // Democratic , Republican
+exports.LOOP_LIMITER = 10000;
