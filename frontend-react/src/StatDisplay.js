@@ -5,16 +5,14 @@ class StatDisplay extends React.Component {
 
     constructor(props) {
         super();
-
-        this.state = {
-            content: props.content
-        };
     }
 
     render() {
+        console.log(this.props.content);
+
         return (
             <div>
-                <h3>{this.state.content}</h3>
+                <h3>{this.props.content}</h3>
             </div>
         );
     }
