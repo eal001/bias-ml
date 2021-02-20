@@ -9,6 +9,7 @@
   "author": "Finn St. John, Elliot Lee, Shantelle Megan Serafin",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/automl": "^2.4.0",
     "firebase": "^8.2.9",
     "firebase-admin": "^9.5.0",
     "firebase-functions": "^3.13.1",

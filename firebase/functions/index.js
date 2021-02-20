@@ -33,7 +33,7 @@ exports.retrieveHTMLContent = functions.https.onRequest( (req, res) => {
     });
 });
 
-exports.predict = functions.https.onRequest((request , response) => {
+exports.predict = functions.https.onRequest(async (request , response) => {
 
     const content = request.query.content;
     const client = new PredictionServiceClient();
@@ -42,7 +42,7 @@ exports.predict = functions.https.onRequest((request , response) => {
     //construct the request
     content = "i listened to kanyes new album today!";
     console.log("dummy content: "+content);
-    const request = {
+    const google_request = {
         name: client.modelPath(GC_PROJECT_ID, GC_COMPUTE_LOCATION, GC_NETWORK_MODEL_ID),
         payload: {
             textSnippet : {
@@ -51,7 +51,7 @@ exports.predict = functions.https.onRequest((request , response) => {
             }
         }
     }
-    const [response] = await client.predict(request);
+    const [google_response] = await client.predict(google_request);
     //console.log(response);
     // for(const annotationPayload of response.payload){
     //     console.log(`Predicted class name: ${annotationPayload.displayName}`);
@@ -59,6 +59,6 @@ exports.predict = functions.https.onRequest((request , response) => {
     // }
     // console.log("finished")
 
-    return res.status(200).send({sentenceScores: response})
+    return res.status(200).send({sentenceScores: google_response})
 
 });
