@@ -9,13 +9,9 @@ class StatDisplay extends React.Component {
     }
 
     render() {
-<<<<<<< HEAD
-        return ( 
-=======
-        console.log(this.props.content);
+        //console.log(this.props.content);
 
         return (
->>>>>>> cd135ab9d536164d858b561832003c17c863bbce
             <div>
                 <ReplaceNewlineWithBreak text={this.props.content}/>
             </div>
@@ -43,8 +39,8 @@ class ReplaceNewlineWithBreak extends React.Component {
         })
         console.log(sentences);
         return (<>{
-            sentences.map( sentence => {
-                return(<h3>{sentence} <br /> </h3>)
+            sentences.map( (sentence, index) => {
+                return(<h3 key={index} >{sentence} <br /> </h3>)
         })}</>)
     }
 }

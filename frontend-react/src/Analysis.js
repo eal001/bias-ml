@@ -67,7 +67,7 @@ class Analysis extends React.Component {
             .then(res => res.json())
             .then(data => {
                 console.log("firebase server response data")
-                console.log(data);
+                //console.log(data);
                 let text_sentences = parseHTML(data);
                 this.setState({
                     websiteContent: text_sentences
