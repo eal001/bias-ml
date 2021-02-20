@@ -22,6 +22,7 @@ fs.readdir(input_loc, 'utf8', function(err, files){
         if(index < constants.LOOP_LIMITER) {
         tempFileName = input_loc + "/" + file
         //read each file from its location, its contents are storeed in data
+        if(file.substr(file.length-3, file.length) == "txt"){
         fs.readFile(tempFileName, 'utf8', function(err, data){
             if(err) throw err;
 
@@ -60,6 +61,7 @@ fs.readdir(input_loc, 'utf8', function(err, files){
             })
 
         })
+    } //closing bracket for checking for file type
     } //this is the closing if statement bracket
     })
 })
