@@ -10,6 +10,7 @@ class Header extends React.Component {
         return (
             <div id='header'>
                 <img src='images/SDHacks.png' id='logo' />
+                <p id='title' >Political Bias Detector</p>
             </div>
         )
     }

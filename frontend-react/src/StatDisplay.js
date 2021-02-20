@@ -11,8 +11,8 @@ class StatDisplay extends React.Component {
         };
     }
 
-    render(props) {
-        return ( 
+    render() {
+        return (
             <div>
                 <h3>{this.state.content}</h3>
             </div>
