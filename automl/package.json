@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Elliot Lee, Shantelle Megan Serafin, Finn St. John",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "sbd": "^1.0.18"
+  }
 }
