@@ -1,6 +1,6 @@
 import React from "react";
 import StatDisplay from "./StatDisplay.js";
-import {extract, removeWhitespace, parseSentences} from "./analyze.js";
+import {extract, removeWhitespace, parseSentences, parseSentencesArray} from "./analyze.js";
 
 /**
  * This file will be to contain all of the components that exist within the body
@@ -19,10 +19,12 @@ class Analysis extends React.Component {
         this.state = {
             url: "",
             websiteContent: 'Stat Display',
+            websiteSentencesArray: [],
             inputPlaceholder: 'Enter URL Here'
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
+        this.handleAnalyze = this.handleAnalyze.bind(this);
     }
     /**
      * we will update the url state every time the text is changed
@@ -68,14 +70,21 @@ class Analysis extends React.Component {
             .then(data => {
                 console.log("firebase server response data")
                 //console.log(data);
-                let text_sentences = parseHTML(data);
+                let text = parseHTML(data);
+                let text_arr = parseSentencesArray(data.htmlContent);
                 this.setState({
-                    websiteContent: text_sentences
+                    websiteContent: text,
+                    websiteSentencesArray: text_arr
                 });
                 
             })
             .catch(error => console.log(error));
         
+    }
+
+    handleAnalyze(){
+        console.log("nothing yet")
+        //this.state.websiteSentencesArray.map( sentence => predict(sentence) )
     }
     
     render() {
@@ -85,7 +94,8 @@ class Analysis extends React.Component {
         return (
             <div id='analysis'>
                 <input id="urlEntry" type="text" placeholder={this.state.inputPlaceholder}  value={this.state.url} onChange={this.handleTextChange} />
-                <button id="urlSubmit" onClick={this.handleSubmit}>Analysis</button>
+                <button id="urlSubmit" onClick={this.handleSubmit}> G E T C O N T E N T </button>
+                <button id="temp" onClick={this.handleAnalyze}>TEMP-ANALYZE</button>
                 <StatDisplay content={this.state.websiteContent} />
             </div>
         )
@@ -107,9 +117,11 @@ class Analysis extends React.Component {
     str = parseSentences(str);
     return str;
  }
+
 /**
  * function that takes the raw google score and computes some statistics
  */
+
 
 //export as a component 
 export default Analysis;

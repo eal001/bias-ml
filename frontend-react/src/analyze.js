@@ -92,20 +92,24 @@ exports.removeWhitespace = function(text) {
 }
 
 exports.parseSentences = function(text) {
-    console.log("sentences parsing!")
+    //console.log("sentences parsing!")
     // let optional_options = {
     //     "newline_boundaries": true
     // }; can add this to the tokenizer usage params
     let sentences = tokenizer.sentences(text);
     let text_in_sentences = "";
 
-    console.log(sentences);
+    //console.log(sentences);
 
     sentences.map(sentence => {
         text_in_sentences += sentence + "\n";
     })
 
-    console.log(text_in_sentences);
+    //console.log(text_in_sentences);
     return text_in_sentences;
+}
+
+exports.parseSentencesArray = function(text){
+    return tokenizer.sentences(text);
 }
 

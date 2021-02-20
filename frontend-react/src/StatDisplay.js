@@ -37,7 +37,7 @@ class ReplaceNewlineWithBreak extends React.Component {
         sentences.map(sentence =>{
             sentence += "<br />"
         })
-        console.log(sentences);
+        //console.log(sentences);
         return (<>{
             sentences.map( (sentence, index) => {
                 return(<h3 key={index} >{sentence} <br /> </h3>)
