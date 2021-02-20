@@ -1,4 +1,4 @@
-const constants = require("./Constants");
+const constants = require("./constants");
 const fs = require("fs");
 const tokenizer = require("sbd");
 //const { constants } = require("./Constants.js");

@@ -1,4 +1,4 @@
-const constants = require("./Constants.js")
+const constants = require("./constants.js")
 const fs = require("fs");
 
 fs.writeFile(constants.OUTPUT_LOC, "", 'utf8', function(err){

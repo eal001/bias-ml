@@ -1,6 +1,6 @@
 //a simple script that will return the sentences inside of an article
 //it will also put into a 
-const constants = require("./Constants.js");
+const constants = require("./constants.js");
 const fs = require('fs');
 const tokenizer = require('sbd');
 

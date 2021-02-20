@@ -10,5 +10,7 @@ firebase/functions/.env
 
 frontend-react/node_modules
 frontend-react/.eslintcache
+frontend-react/.env
+frontend-react/credentials.json
 
 ./workspace.code-workspace
