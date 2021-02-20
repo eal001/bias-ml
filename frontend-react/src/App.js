@@ -1,5 +1,6 @@
 import Analysis from "./Analysis.js";
 import Header from "./Header.js";
+import React from 'react';
 
 function App() {
   return (

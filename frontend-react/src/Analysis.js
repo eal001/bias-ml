@@ -11,19 +11,21 @@ import StatDisplay from "./StatDisplay.js";
  /**
   * container class for all of the info components
   */
-class Analysis extends React.Component{
+class Analysis extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            url: ""
+            url: "",
+            websiteContent: 'Stat Display',
+            inputPlaceholder: 'Enter URL Here'
         }
-        this.handleClick = this.handleClick.bind();
-        this.handleTextChange = this.handleClick.bind();
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleTextChange = this.handleTextChange.bind(this);
     }
     /**
      * we will update the url state every time the text is changed
-     * @param {javascript object} event the event where the url is changed 
+     * @param {javascript object} event the event where the url is changed
      */
     handleTextChange(event) {
 
@@ -36,18 +38,46 @@ class Analysis extends React.Component{
     /**
      * The post request for the HTML from a link will be handled here
      */
-    handleSubmit(){
+    handleSubmit(event) {
 
         //post request
+
+        //Add error catching for invalid urls
+
+        if (this.state.url === '') {
+            this.setState({
+                inputPlaceholder: 'Please enter a valid URL'
+            });
+
+            setTimeout(() => {
+                this.setState({
+                    inputPlaceholder: 'Enter URL here'
+                });
+            }, 1000);
+
+            return;
+        }
+
+        this.setState({
+            url: ''
+        });
+
+        fetch('http://localhost:5001/biasml/us-central1/retrieveHTMLContent?url=' + this.state.url, {method: 'POST'})
+            .then(res => res.json())
+            .then(data => {
+                this.setState({
+                    websiteContent: data.htmlContent
+                });
+            })
+            .catch(error => console.log(error));
     }
     
     render() {
         return (
             <div>
-                <input id="urlEntry" type="text" placeholder="Enter URL Here" onClick={this.handleTextChange} />
-                <button id="urlSubmit" onClick={this.handleClick} />
-                Analysis
-                <StatDisplay/>
+                <input id="urlEntry" type="text" placeholder={this.state.inputPlaceholder}  value={this.state.url} onChange={this.handleTextChange} />
+                <button id="urlSubmit" onClick={this.handleSubmit}>Analysis</button>
+                <StatDisplay content={this.state.websiteContent} />
             </div>
         )
     }
@@ -67,4 +97,4 @@ class Analysis extends React.Component{
  */
 
 //export as a component 
-export default Analysis
+export default Analysis;
