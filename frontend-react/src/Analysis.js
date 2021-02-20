@@ -1,5 +1,6 @@
 import React from "react";
 import StatDisplay from "./StatDisplay.js";
+import {extract, removeWhitespace, parseSentences} from "./analyze.js";
 
 /**
  * This file will be to contain all of the components that exist within the body
@@ -66,10 +67,12 @@ class Analysis extends React.Component {
             .then(res => res.json())
             .then(data => {
                 console.log("firebase server response data")
-                console.log(data);
+                //console.log(data);
+                let text_sentences = parseHTML(data);
                 this.setState({
-                    websiteContent: data.htmlContent
+                    websiteContent: text_sentences
                 });
+                
             })
             .catch(error => console.log(error));
         
@@ -77,8 +80,8 @@ class Analysis extends React.Component {
     
     render() {
 
-        console.log("rendering analysis page");
-        console.log(this.state.websiteContent);
+        //console.log("rendering analysis page");
+        //console.log(this.state.websiteContent);
         return (
             <div id='analysis'>
                 <input id="urlEntry" type="text" placeholder={this.state.inputPlaceholder}  value={this.state.url} onChange={this.handleTextChange} />
@@ -91,13 +94,19 @@ class Analysis extends React.Component {
 }
 
 /**
- * function that takes the input and posts it to google firebase
- */
-
-/**
  * function that takes the raw HTML and posts it to google AutoML
  */
 
+ const parseHTML = (raw) => {
+
+    console.log("parsing the html")
+    let str = extract(raw.htmlContent);
+    //console.log({str});
+    str = removeWhitespace(str);
+    //console.log({str});
+    str = parseSentences(str);
+    return str;
+ }
 /**
  * function that takes the raw google score and computes some statistics
  */
