@@ -1,6 +1,7 @@
 automl/node_modules
 
 firebase/node_modules
+firebase/functions/.env
 
 frontend-react/node_modules
 frontend-react/.eslintcache
