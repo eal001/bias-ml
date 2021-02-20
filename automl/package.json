@@ -1,0 +1,11 @@
+{
+  "name": "automl",
+  "version": "1.0.0",
+  "description": "These are the tools that will be used for creating and training the AutoML natural language processing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Elliot Lee, Shantelle Megan Serafin, Finn St. John",
+  "license": "ISC"
+}
