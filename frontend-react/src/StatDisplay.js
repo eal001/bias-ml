@@ -12,13 +12,13 @@ class StatDisplay extends React.Component {
     }
 
     render(props) {
-        return( 
+        return ( 
             <div>
                 <h3>{this.state.content}</h3>
             </div>
-        )
+        );
     }
 
 }
 
-export default StatDisplay
+export default StatDisplay;
