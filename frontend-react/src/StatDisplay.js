@@ -9,7 +9,13 @@ class StatDisplay extends React.Component {
     }
 
     render() {
+<<<<<<< HEAD
         return ( 
+=======
+        console.log(this.props.content);
+
+        return (
+>>>>>>> cd135ab9d536164d858b561832003c17c863bbce
             <div>
                 <ReplaceNewlineWithBreak text={this.props.content}/>
             </div>

@@ -35,7 +35,7 @@ a:visited {
     margin-right: 10px;
     margin-bottom: 10px;
     margin-top: 10px;
-    background: pink;
+    border-left: 5px black solid;
 }
 
 #header {
@@ -43,9 +43,21 @@ a:visited {
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 2;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 4fr 1fr;
+    display: flex;
+    flex-direction: column;
+}
+
+#logo {
+    width: 35vh;
+    margin-bottom: 0;
+}
+
+#title {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 10px;
+    font-size: 40px;
+    padding: 0;
 }
 
 .navbar-list-element {
@@ -54,6 +66,7 @@ a:visited {
     position: relative;
     display: inline;
     justify-self: left;
+    font-size: 20px;
 }
 
 .navbar-list-element::after {
@@ -65,13 +78,18 @@ a:visited {
     transition: 0.3s all;
     background-color: black;
     opacity: 0;
+    left: 15px;
+}
+
+.navbar-list-element-active {
+    opacity: 0.6;
 }
 
 .navbar-list-element:hover::after {
-    width: 85%;
+    width: 90%;
     opacity: 1;
 }
 
-#logo {
-    width: 100%;
+#analysis {
+    margin: 10px;
 }
