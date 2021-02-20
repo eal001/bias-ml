@@ -4,4 +4,9 @@ firebase/node_modules
 
 react/node_modules
 react/.eslintcache
+<<<<<<< HEAD
 workspace.code-workspace
+=======
+
+./workspace.code-workspace
+>>>>>>> 4dc9b97a5e5ff6959d2b13b2598738c358687d51
