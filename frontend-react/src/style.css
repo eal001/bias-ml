@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    min-width: 100vw;
+    overflow-y: hidden;
+}
+
+@font-face {
+    font-family: 'Atkinson';
+    src: url('./assets/fonts/Atkinson-Hyperlegible-Regular-102.otf');
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+#app {
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    grid-template-rows: 1fr 5fr;
+    height: 100vh;
+}
+
+#sidebar {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 8fr;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    background: pink;
+}
+
+#header {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 4fr 1fr;
+}
+
+.navbar-list-element {
+    padding-left: 1vw;
+    padding-right: 1vw;
+    position: relative;
+    display: inline;
+    justify-self: left;
+}
+
+.navbar-list-element::after {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 2px;
+    width: 0%;
+    transition: 0.3s all;
+    background-color: black;
+    opacity: 0;
+}
+
+.navbar-list-element:hover::after {
+    width: 85%;
+    opacity: 1;
+}
+
+#logo {
+    width: 100%;
+}

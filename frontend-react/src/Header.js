@@ -8,8 +8,8 @@ class Header extends React.Component {
 
     render() {
         return (
-            <div>
-                Header
+            <div id='header'>
+                <img src='images/SDHacks.png' id='logo' />
             </div>
         )
     }

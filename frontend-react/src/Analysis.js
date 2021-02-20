@@ -74,7 +74,7 @@ class Analysis extends React.Component {
     
     render() {
         return (
-            <div>
+            <div id='analysis'>
                 <input id="urlEntry" type="text" placeholder={this.state.inputPlaceholder}  value={this.state.url} onChange={this.handleTextChange} />
                 <button id="urlSubmit" onClick={this.handleSubmit}>Analysis</button>
                 <StatDisplay content={this.state.websiteContent} />
