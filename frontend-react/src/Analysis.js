@@ -15,17 +15,40 @@ class Analysis extends React.Component{
 
     constructor() {
         super();
+        this.state = {
+            url: ""
+        }
+        this.handleClick = this.handleClick.bind();
+        this.handleTextChange = this.handleClick.bind();
+    }
+    /**
+     * we will update the url state every time the text is changed
+     * @param {javascript object} event the event where the url is changed 
+     */
+    handleTextChange(event) {
+
+        this.setState({
+            url: event.target.value
+        })
+        
+    }
+
+    /**
+     * The post request for the HTML from a link will be handled here
+     */
+    handleSubmit(){
+
+        //post request
     }
     
     render() {
-
         return (
-
             <div>
+                <input id="urlEntry" type="text" placeholder="Enter URL Here" onClick={this.handleTextChange} />
+                <button id="urlSubmit" onClick={this.handleClick} />
                 Analysis
                 <StatDisplay/>
             </div>
-        
         )
     }
 
