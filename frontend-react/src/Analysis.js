@@ -65,14 +65,20 @@ class Analysis extends React.Component {
         fetch('http://localhost:5001/biasml/us-central1/retrieveHTMLContent?url=' + this.state.url, {method: 'POST'})
             .then(res => res.json())
             .then(data => {
+                console.log("firebase server response data")
+                console.log(data);
                 this.setState({
                     websiteContent: data.htmlContent
                 });
             })
             .catch(error => console.log(error));
+        
     }
     
     render() {
+
+        console.log("rendering analysis page");
+        console.log(this.state.websiteContent);
         return (
             <div id='analysis'>
                 <input id="urlEntry" type="text" placeholder={this.state.inputPlaceholder}  value={this.state.url} onChange={this.handleTextChange} />
