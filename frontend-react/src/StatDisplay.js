@@ -1,16 +1,17 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import tokenizer from "sbd";
+import {SCORE_CATEGORY_1, SCORE_CATEGORY_2} from "./constants"
 
 function StatDisplay(props) {
     console.log('constructed stats');
     console.log(props);
 
     const data = {
-        labels: ['Republican', 'Democratic'],
+        labels: [SCORE_CATEGORY_1, SCORE_CATEGORY_2],
         datasets: [{
             label: 'Percentage of Bias',
-            data: [props.content.dem, props.content.rep],
+            data: [props.content.s1, props.content.s2],
             backgroundColor: [
                 'rgba(165, 33, 45, 0.95)',
                 'rgba(2, 12, 97, 0.95)'

@@ -1,6 +1,5 @@
 import React from "react";
 import StatDisplay from "./StatDisplay.js";
-import {extract, removeWhitespace, parseSentences, parseSentencesArray, removeCommas} from "./analyze.js";
 import {SCORE_CATEGORY_1, SCORE_CATEGORY_2} from "./constants.js"
 
 /**
@@ -20,7 +19,6 @@ class Analysis extends React.Component {
         this.state = {
             url: "",
             websiteContent: 'Stat Display',
-            websiteSentencesArray: [],
             inputPlaceholder: 'Enter URL Here',
             stats: {
                 max: 0,
@@ -70,24 +68,14 @@ class Analysis extends React.Component {
         //POST REQUEST FOR HTML 
         let resH = await fetch('http://localhost:5001/biasml/us-central1/retrieveHTMLContent?url=' + this.state.url, {method: 'POST'});
         await resH.json().then(data => {
-            console.log("recieved html data")
-            //console.log(data);
-            let text = parseHTML(data);
-            let text_arr = parseHTMLArray(data);
+            console.log("recieved data")
+            console.log(data);
+            
+            this.computeStats(data.sentenceScores);
             this.setState({
-                websiteContent: text,
-                websiteSentencesArray: text_arr
-            });
+                websiteContent: data.previewText
+            })
                 
-        }).catch(error => console.log(error));
-
-        console.log(this.state.websiteSentencesArray);
-        //POST REQUEST FOR GOOGLE NATURAL LANGUAGE ML
-        let resA = await fetch("http://localhost:5001/biasml/us-central1/predict?content_array=" + this.state.websiteSentencesArray, {method: 'POST'});
-        await resA.json().then(google_data => {
-            console.log("recieved automl data");
-            console.log(google_data);
-            this.computeStats(google_data);
         }).catch(error => console.log(error));
 
         this.setState({
@@ -99,33 +87,50 @@ class Analysis extends React.Component {
      * take all of the scores and evaluate statistics
      * @param {object} data google data returned from the automl call
      */
-    computeStats(data){
+    computeStats(sentenceScores){
 
         let total1 = 0;
         let total2 = 0;
-        let sen_count = data.sentenceScores.length;
+        let sen_count = sentenceScores.length;
+        //console.log(sentenceScores);
 
-        data.sentenceScores.map( singleObject => {
+        sentenceScores.map( singleObject => {
             //console.log(singleObject);
             for(let i = 0; i < singleObject.payload.length; i++ ){
                 const score = singleObject.payload[i];
                 if(score.displayName == SCORE_CATEGORY_1){
-                    total1 = score.classification.score;
+                    total1 += score.classification.score;
                 }
                 if(score.displayName == SCORE_CATEGORY_2){
-                    total2 = score.classification.score;
+                    //console.log("executed");
+                    total2 += score.classification.score;
                 }
             }
         })
-        const score1 = total1/sen_count;
-        const score2 = total2/sen_count;
+
+        let score1 = total1/sen_count;
+        let score2 = total2/sen_count;
         const avg = score1 - score2;
 
+        if(score1 > score1/2){
+            score1 = score1/2;
+        }
+        if(score2 > score2/2){
+            score2 = score2/2;
+        }
+
         const temp = {
-            dem: score1,
-            rep: score2,
+            s1: score1,
+            s2: score2,
             avg: avg,
         };
+
+        console.log("total 1: "+total1);
+        console.log("total 2: "+total2);
+        console.log("score 1: "+score1);
+        console.log("score 2: "+score2);
+        console.log("read from "+sen_count+" sentences");
+        console.log("average: "+avg);
 
         this.setState({
             stats: temp
@@ -162,37 +167,6 @@ class Analysis extends React.Component {
     }
 
 }
-
-/**
- * function that takes the raw HTML and posts it to google AutoML
- */
-
- const parseHTML = (raw) => {
-
-    //console.log("parsing the html for text");
-    let str = extract(raw.htmlContent);
-    //console.log({str});
-    str = removeWhitespace(str);
-    //console.log({str});
-    str = parseSentences(str);
-    return str;
- }
-
- const parseHTMLArray = (raw) => {
-    //console.log("parsing the html for array");
-    let str = extract(raw.htmlContent);
-    console.log({str});
-    str = removeCommas(str);
-    console.log(str)
-    str = removeWhitespace(str);
-    //console.log({str});
-    const arr = parseSentencesArray(str);
-    return arr;
- }
-
-/**
- * function that takes the raw google score and computes some statistics
- */
 
 
 //export as a component 

@@ -4,7 +4,7 @@ const tokenizer = require("sbd");
  * 
  * @param content html content for the algorithm to analyze
  */
-export function extract(content) {
+exports.extract = function (content) {
 
     //console.log("running extract")
     let isInsideTag = false;
@@ -69,7 +69,7 @@ export function extract(content) {
     return textContent;
 }
 
-export function removeWhitespace(text) {
+exports.removeWhitespace = function (text) {
     //console.log("running whitespace")
     let output = '';
     let prevChar;
@@ -92,7 +92,7 @@ export function removeWhitespace(text) {
     return output;
 }
 
-export function parseSentences(text) {
+exports.parseSentences = function (text) {
     //console.log("sentences parsing!")
     // let optional_options = {
     //     "newline_boundaries": true
@@ -110,7 +110,7 @@ export function parseSentences(text) {
     return text_in_sentences;
 }
 
-export function parseSentencesArray(text){
+exports.parseSentencesArray = function (text){
     const sentences = tokenizer.sentences(text);
     //console.log("inside parse sentences");
     //console.log(sentences);
@@ -118,7 +118,7 @@ export function parseSentencesArray(text){
     return sentences;
 }
 
-export function removeCommas(text){
+exports.removeCommas = function (text){
     for (const c in text) {
         if ( c == ',') {
             c = ' ';
