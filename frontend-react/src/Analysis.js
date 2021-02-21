@@ -98,10 +98,10 @@ class Analysis extends React.Component {
             //console.log(singleObject);
             for(let i = 0; i < singleObject.payload.length; i++ ){
                 const score = singleObject.payload[i];
-                if(score.displayName == SCORE_CATEGORY_1){
+                if(score.displayName === SCORE_CATEGORY_1){
                     total1 += score.classification.score;
                 }
-                if(score.displayName == SCORE_CATEGORY_2){
+                if(score.displayName === SCORE_CATEGORY_2){
                     //console.log("executed");
                     total2 += score.classification.score;
                 }
@@ -113,8 +113,8 @@ class Analysis extends React.Component {
         if(score1 > score1/2){
             score1 = score1/2;
         }
-        if(score2 > score2/2){
-            score2 = score2/2;
+        if(score2 > score2 / 2){
+            score2 = score2 / 2;
         }
         const avg = score1 - score2;
 
@@ -132,12 +132,12 @@ class Analysis extends React.Component {
 
         };
 
-        console.log("total 1: "+total1);
-        console.log("total 2: "+total2);
-        console.log("score 1: "+score1);
-        console.log("score 2: "+score2);
-        console.log("read from "+sen_count+" sentences");
-        console.log("average: "+avg);
+        console.log("total 1: " + total1);
+        console.log("total 2: " + total2);
+        console.log("score 1: " + score1);
+        console.log("score 2: " + score2);
+        console.log("read from " + sen_count + " sentences");
+        console.log("average: " + avg);
 
         this.setState({
             stats: temp
