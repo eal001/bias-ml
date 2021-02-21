@@ -32,7 +32,6 @@ exports.retrieveHTMLContent = functions.https.onRequest( (req, res) => {
             'Origin, X-Requested-With, Content-Type, Accept'
         );
         await browser.close();
-        //return res.status(200).send({htmlContent: pageContent});
         
         //PARSE HTML FOR SENTENCES
         
@@ -48,18 +47,10 @@ exports.retrieveHTMLContent = functions.https.onRequest( (req, res) => {
         //NOW TAKE SENTENCES AND SEND TO AUTOML
         const client = new PredictionServiceClient();
         let final_response = [];
-        //console.log("got content: " + content_array);
-        //console.log(typeof content_array);
-        //console.log("note: b/c data types do not match up, dummy data has been substituted currently")
-        //construct the request
         console.log("posting query");
-        //console.log(content_array);
         
         for(let i = 0; i < content_array.length; i++){
             let content = content_array[i];
-            //console.log("true sentence:" + content);
-            //content = "i listened to kanyes new album today!";
-            //console.log("dummy content: "+content);
             const google_request = {
                 name: client.modelPath(GC_PROJECT_ID, GC_COMPUTE_LOCATION, GC_NETWORK_MODEL_ID),
                 payload: {
@@ -71,21 +62,12 @@ exports.retrieveHTMLContent = functions.https.onRequest( (req, res) => {
             }
             const [google_response] = await client.predict(google_request);  
             final_response.push(google_response);
-            //final_response.push(google_response);
         }
         console.log("analysis complete");
         console.log("sentences analyzed: "+content_array.length);
         console.log("returning a response");
-        // console.log("total resp")
-        // console.log(final_response)
-        // console.log("the final Response 1")
-        // console.log(final_response[0]);
-        // console.log("the final Response 2")
-        // console.log(final_response[1]);
-        // console.log("the final Response 3")
-        // console.log(final_response[2]);
 
-        return res.status(200).send({previewText: previewText, sentenceScores: final_response})
+        return res.status(200).send({previewText: previewText, sentenceScores: final_response});
     });
 });
 
@@ -110,15 +92,8 @@ exports.predict = functions.https.onRequest( async (req , res) => {
     
     return cors(req, res, async () => {
         const client = new PredictionServiceClient();
-        //console.log("got content: " + content_array);
-        //console.log(typeof content_array);
-        //console.log("note: b/c data types do not match up, dummy data has been substituted currently")
-        //construct the request
         for(let i = 0; i < content_array.length; i++){
             let content = content_array[i];
-            //console.log("true sentence:" + content);
-            //content = "i listened to kanyes new album today!";
-            //console.log("dummy content: "+content);
             const google_request = {
                 name: client.modelPath(GC_PROJECT_ID, GC_COMPUTE_LOCATION, GC_NETWORK_MODEL_ID),
                 payload: {
@@ -131,18 +106,7 @@ exports.predict = functions.https.onRequest( async (req , res) => {
             const [google_response] = await client.predict(google_request);
                         
             final_response.push(google_response);
-            //final_response.push(google_response);
-
         }
-
-        // console.log("total resp")
-        // console.log(final_response)
-        // console.log("the final Response 1")
-        // console.log(final_response[0]);
-        // console.log("the final Response 2")
-        // console.log(final_response[1]);
-        // console.log("the final Response 3")
-        // console.log(final_response[2]);
 
         return res.status(200).send({sentenceScores: final_response})
     });
