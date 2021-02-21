@@ -1,10 +1,6 @@
 import React from "react";
 import StatDisplay from "./StatDisplay.js";
-<<<<<<< HEAD
-import { extract, removeWhitespace, parseSentences, parseSentencesArray } from "./analyze.js";
-=======
 import {extract, removeWhitespace, parseSentences, parseSentencesArray, removeCommas} from "./analyze.js";
->>>>>>> 6f5a4ce0e126ba425d97c1ad3f513a1ee9b72ccb
 
 /**
  * This file will be to contain all of the components that exist within the body
@@ -39,16 +35,8 @@ class Analysis extends React.Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
-<<<<<<< HEAD
         this.computeStats = this.computeStats.bind(this);
-=======
-<<<<<<< HEAD
-        this.handleAnalyze = this.handleAnalyze.bind(this);
 
-        console.log(this.state.stats);
-=======
->>>>>>> 6f5a4ce0e126ba425d97c1ad3f513a1ee9b72ccb
->>>>>>> f3d26f655ee882fe2f83b5e1411fb0f8811fa78e
     }
     /**
      * we will update the url state every time the text is changed
@@ -56,12 +44,10 @@ class Analysis extends React.Component {
      */
     handleTextChange(event) {
         event.persist();
-        //console.log("text change");
-        //console.log(event.target.value);
+        
         this.setState({
             url: event.target.value
         })
-        //console.log(this.state.url);
         
     }
 
@@ -69,10 +55,6 @@ class Analysis extends React.Component {
      * The post request for the HTML from a link will be handled here
      */
     async handleSubmit(event) {
-
-        //post request
-
-        //Add error catching for invalid urls
 
         if (this.state.url === '') {
             this.setState({
@@ -129,6 +111,8 @@ class Analysis extends React.Component {
                 console.log(singleObject.payload[i]);
             }
         })
+        const d = (Math.random())
+        const r = 1-r;
         const n = (Math.random() * 2)-1;
         const s = (Math.random() * 2)-1;
         const temp = {
