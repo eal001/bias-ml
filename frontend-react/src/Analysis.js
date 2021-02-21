@@ -133,7 +133,6 @@ class Analysis extends React.Component {
     }
     
     render() {
-
         return (
             <div id='analysis'>
                 <div id='input-cont'>

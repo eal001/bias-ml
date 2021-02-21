@@ -27,7 +27,6 @@ function App() {
             <Route path='/' exact component={Analysis} />
           </Switch>
         </div>
-        {/* <p id='motto'>EVERYONE DESERVES TO FORM THEIR OWN OPINIONS</p> */}
       </div>
     </Router>
   );
