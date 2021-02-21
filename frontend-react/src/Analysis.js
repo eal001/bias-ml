@@ -70,7 +70,8 @@ class Analysis extends React.Component {
         this.setState({
             url: ''
         });
-        //http://localhost:5001/biasml/us-central1/predict?content= "content equlas" FOR OTHER FIREBASE FUNCT
+
+        //POST REQUEST FOR HTML 
         fetch('http://localhost:5001/biasml/us-central1/retrieveHTMLContent?url=' + this.state.url, {method: 'POST'})
             .then(res => res.json())
             .then(data => {
@@ -86,12 +87,12 @@ class Analysis extends React.Component {
             })
             .catch(error => console.log(error));
 
+        //POST REQUEST FOR GOOGLE NATURAL LANGUAGE ML
         fetch("http://localhost:5001/biasml/us-central1/predict?content_array=" + this.state.websiteSentencesArray, {method: 'POST'})
             .then(res => res.json())
             .then(google_data => {
                 console.log(google_data);
                 computeStats(google_data);
-                
             })
             .catch(error => console.log(error));
         
