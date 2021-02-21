@@ -1,6 +1,10 @@
 import React from "react";
 import StatDisplay from "./StatDisplay.js";
+<<<<<<< HEAD
+import { extract, removeWhitespace, parseSentences, parseSentencesArray } from "./analyze.js";
+=======
 import {extract, removeWhitespace, parseSentences, parseSentencesArray, removeCommas} from "./analyze.js";
+>>>>>>> 6f5a4ce0e126ba425d97c1ad3f513a1ee9b72ccb
 
 /**
  * This file will be to contain all of the components that exist within the body
@@ -24,14 +28,27 @@ class Analysis extends React.Component {
             stats: {
                 max: 0,
                 min: 0,
-                ave: 0,
+                avg: 0,
                 sdev: 0,
-                med: 0
+                med: 0,
+                rep: 0,
+                dem: 0,
+                prevTitle: '',
+                prevBody: ''
             }
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
+<<<<<<< HEAD
         this.computeStats = this.computeStats.bind(this);
+=======
+<<<<<<< HEAD
+        this.handleAnalyze = this.handleAnalyze.bind(this);
+
+        console.log(this.state.stats);
+=======
+>>>>>>> 6f5a4ce0e126ba425d97c1ad3f513a1ee9b72ccb
+>>>>>>> f3d26f655ee882fe2f83b5e1411fb0f8811fa78e
     }
     /**
      * we will update the url state every time the text is changed
@@ -98,8 +115,6 @@ class Analysis extends React.Component {
         this.setState({
             url: ''
         });
-        
-        console.log(this.state.websiteSentencesArray);
     }
 
     /**
@@ -119,10 +134,15 @@ class Analysis extends React.Component {
         const temp = {
             min: -0.99,
             max: 0.99,
-            ave: n,
+            avg: n,
             sdev: s,
-            med: n-0.2
-        }
+            med: n - 0.2,
+            dem: d,
+            rep: r,
+            prevBody: 'First 400 Characters',
+            prevTitle: 'Preview Title'
+        };
+
         this.setState({
             state : temp
         })
@@ -130,14 +150,28 @@ class Analysis extends React.Component {
     
     render() {
 
-        //console.log("rendering analysis page");
-        //console.log(this.state.websiteContent);
-        //console.log(this.state.url);
         return (
             <div id='analysis'>
-                <input id="urlEntry" type="text" placeholder={this.state.inputPlaceholder} onChange={(e) => {this.handleTextChange(e)}} value={this.state.url}/>
-                <button id="urlSubmit" onClick={this.handleSubmit}> G E T C O N T E N T </button>
-                <StatDisplay content={this.state.websiteContent} />
+                <div id='input-cont'>
+                    <p id='prompt-text'>URL :</p>
+                    <div id='text-cont'>
+                        <input id="urlEntry" type="text" placeholder={this.state.inputPlaceholder}  value={this.state.url} onChange={this.handleTextChange} />
+                    </div>
+                    <div id='button-cont'>
+                        <button id="urlSubmit" onClick={this.handleSubmit}>Enter</button>
+                    </div>
+                </div>
+                <div id='content-cont'>
+                    <StatDisplay content={this.state.stats} />
+                    <div id='preview-cont'>
+                        <h1>Preview Title</h1>
+                        <p>First 400 characters</p>
+                    </div>
+                </div>
+                <div id='analysis-cont'>
+                    <h1>Detailed Analysis</h1>
+                    <p>This article is biased or maybe it's not idk</p>
+                </div>
             </div>
         )
     }
