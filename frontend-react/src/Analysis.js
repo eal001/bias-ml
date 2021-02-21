@@ -26,14 +26,11 @@ class Analysis extends React.Component {
                 avg: 0,
                 sdev: 0,
                 med: 0,
-                rep: 0,
-                dem: 0,
+                s1: 0,
+                s2: 0,
                 prevTitle: '',
                 prevBody: ''
-            },
-            articleTitle: 'ARTICLE PREVIEW',
-            previewBody: 'A preview of the article will appear here.',
-            analysisTextBody: "A description of the article's score will appear here."
+            }
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
@@ -74,10 +71,7 @@ class Analysis extends React.Component {
             console.log("recieved data")
             console.log(data);
             
-            this.computeStats(data.sentenceScores);
-            this.setState({
-                websiteContent: data.previewText
-            })
+            this.computeStats(data);
                 
         }).catch(error => console.log(error));
 
@@ -90,14 +84,14 @@ class Analysis extends React.Component {
      * take all of the scores and evaluate statistics
      * @param {object} data google data returned from the automl call
      */
-    computeStats(sentenceScores){
+    computeStats(data){
 
         let total1 = 0;
         let total2 = 0;
-        let sen_count = sentenceScores.length;
+        let sen_count = data.sentenceScores.length;
         //console.log(sentenceScores);
 
-        sentenceScores.map( singleObject => {
+        data.sentenceScores.map( singleObject => {
             //console.log(singleObject);
             for(let i = 0; i < singleObject.payload.length; i++ ){
                 const score = singleObject.payload[i];
@@ -113,19 +107,26 @@ class Analysis extends React.Component {
 
         let score1 = total1/sen_count;
         let score2 = total2/sen_count;
-        const avg = score1 - score2;
-
         if(score1 > score1/2){
             score1 = score1/2;
         }
         if(score2 > score2/2){
             score2 = score2/2;
         }
+        const avg = score1 - score2;
+
 
         const temp = {
             s1: score1,
             s2: score2,
             avg: avg,
+            max: 0,
+            min: 0,
+            sdev: 0,
+            med: 0,
+            prevTitle: '',
+            prevBody: data.previewText
+
         };
 
         console.log("total 1: "+total1);
@@ -141,6 +142,7 @@ class Analysis extends React.Component {
     }
     
     render() {
+
         return (
             <div id='analysis'>
                 <div id='input-cont'>
@@ -155,13 +157,13 @@ class Analysis extends React.Component {
                     <div id='content-cont'>
                         <StatDisplay content={this.state.stats} />
                         <div id='preview-cont'>
-                            <h1 className='content-text-title'>{this.state.articleTitle}</h1>
-                            <p className='content-text-body'>{this.state.previewBody}</p>
+                            <h1>Preview Title</h1>
+                            <p>First 400 characters</p>
                         </div>
                     </div>
                     <div id='analysis-cont'>
-                        <h1 className='content-text-title'>DETAILED ANALYSIS</h1>
-                        <p className='content-text-body'>{this.state.analysisTextBody}</p>
+                        <h1>Detailed Analysis</h1>
+                        <p>This article is biased or maybe it's not idk</p>
                     </div>
                 </div>
             </div>
