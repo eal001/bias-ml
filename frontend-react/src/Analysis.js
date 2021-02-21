@@ -39,12 +39,9 @@ class Analysis extends React.Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
-<<<<<<< HEAD
         this.handleAnalyze = this.handleAnalyze.bind(this);
 
         console.log(this.state.stats);
-=======
->>>>>>> 6f5a4ce0e126ba425d97c1ad3f513a1ee9b72ccb
     }
     /**
      * we will update the url state every time the text is changed
@@ -133,7 +130,7 @@ class Analysis extends React.Component {
 
         this.setState({
             state : temp
-        })
+        });
     }
     
     render() {
