@@ -36,21 +36,24 @@ exports.retrieveHTMLContent = functions.https.onRequest( (req, res) => {
         //PARSE HTML FOR SENTENCES
         
         console.log("parsing html");
-        let str = extract(pageContent);
-        str = removeWhitespace(str);
-        const previewText = parseSentences(str) // THIS IS SAVED FOR LATER
+        let {title, body}  = extract(pageContent);
+        body = removeWhitespace(body);
+        const previewText = parseSentences(body) // THIS IS SAVED FOR LATER
+        const previewTitle = title; //THIS IS SAVED FOR LATER
         console.log("created preview");
-        str = removeCommas(str);
-        const content_array = parseSentencesArray(str);
+        body = removeCommas(body);
+        const content_array = parseSentencesArray(body);
         console.log("created natural language query");
 
         //NOW TAKE SENTENCES AND SEND TO AUTOML
         const client = new PredictionServiceClient();
         let final_response = [];
+        
         console.log("posting query");
         
         for(let i = 0; i < content_array.length; i++){
             let content = content_array[i];
+            
             const google_request = {
                 name: client.modelPath(GC_PROJECT_ID, GC_COMPUTE_LOCATION, GC_NETWORK_MODEL_ID),
                 payload: {
@@ -67,6 +70,6 @@ exports.retrieveHTMLContent = functions.https.onRequest( (req, res) => {
         console.log("sentences analyzed: "+content_array.length);
         console.log("returning a response");
 
-        return res.status(200).send({previewText: previewText, sentenceScores: final_response});
+        return res.status(200).send({previewTitle: previewTitle, previewText: previewText, sentenceScores: final_response})
     });
 });

@@ -1,7 +1,7 @@
 import React from "react";
 import StatDisplay from "./StatDisplay.js";
 import {SCORE_CATEGORY_1, SCORE_CATEGORY_2} from "./constants.js"
-
+import ReplaceNewLineWithBreak from "./ReplaceNewlineWithBreak.js"
 /**
  * This file will be to contain all of the components that exist within the body
  * It will process the information contained within the URL, post to firebase, and
@@ -69,7 +69,7 @@ class Analysis extends React.Component {
         let resH = await fetch('https://us-central1-biasml.cloudfunctions.net/retrieveHTMLContent?url=' + this.state.url, {method: 'POST'});
         await resH.json().then(data => {
             console.log("recieved data")
-            console.log(data);
+            //console.log(data);
             
             this.computeStats(data);
                 
@@ -85,6 +85,9 @@ class Analysis extends React.Component {
      * @param {object} data google data returned from the automl call
      */
     computeStats(data){
+
+        //console.log(data.previewText);
+        //console.log(data.previewTitle);
 
         let total1 = 0;
         let total2 = 0;
@@ -124,7 +127,7 @@ class Analysis extends React.Component {
             min: 0,
             sdev: 0,
             med: 0,
-            prevTitle: '',
+            prevTitle: data.previewTitle,
             prevBody: data.previewText
 
         };
@@ -143,6 +146,9 @@ class Analysis extends React.Component {
     
     render() {
 
+        //console.log(this.state.stats.prevTitle);
+        //console.log(this.state.stats.prevBody);
+
         return (
             <div id='analysis'>
                 <div id='input-cont'>
@@ -157,8 +163,8 @@ class Analysis extends React.Component {
                     <div id='content-cont'>
                         <StatDisplay content={this.state.stats} />
                         <div id='preview-cont'>
-                            <h1>Preview Title</h1>
-                            <p>First 400 characters</p>
+                            <h1>{this.state.stats.prevTitle}</h1>
+                            <ReplaceNewLineWithBreak text={this.state.stats.prevBody}/>
                         </div>
                     </div>
                     <div id='analysis-cont'>
@@ -171,6 +177,7 @@ class Analysis extends React.Component {
     }
 
 }
+
 
 
 //export as a component 

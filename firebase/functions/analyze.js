@@ -12,10 +12,13 @@ exports.extract = function (content) {
     let isInsideScriptTag = false;
     let isInsideStyleTag = false;
     let isTagNameResolved = false;
+    let inTitle = false;
+    let titleComplete = false;
     
     let lastChar = '';
     let tagName = '';
     let textContent = '';
+    let title = "";
 
     for (let i = 0; i < content.length; i++) {
         const currentChar = content[i];
@@ -40,12 +43,20 @@ exports.extract = function (content) {
             }
             isInsideStyleTag = (tagName === 'style');
             textContent += ' ';
+
+            if(tagName === "h1" || tagName === "h" || tagName === "h2" || tagName === "h3"){
+                inTitle = true
+            }
+            //console.log(tagName);
         }
 
         if (currentChar === '<') {
             isTagNameResolved = false;
             isInsideTag = true;
             lastChar = currentChar;
+            if(inTitle){
+                titleComplete = true;
+            }
         } if (currentChar === '>') {
             isInsideTag = false;
             lastChar = currentChar;
@@ -56,7 +67,12 @@ exports.extract = function (content) {
 
         if (shouldAddChar) {
             textContent += currentChar;
+
+            if(inTitle && !titleComplete){
+                title += currentChar
+            }
         }
+        
         //console.log(textContent);
 
         lastChar = currentChar;
@@ -64,9 +80,9 @@ exports.extract = function (content) {
     }
     
     //this can be removed once lastchar is used in this code
-    //console.log(lastChar);
+    console.log(title);
     
-    return textContent;
+    return {title: title, body: textContent};
 }
 
 exports.removeWhitespace = function (text) {
