@@ -32,7 +32,10 @@ class Analysis extends React.Component {
                 dem: 0,
                 prevTitle: '',
                 prevBody: ''
-            }
+            },
+            articleTitle: 'ARTICLE PREVIEW',
+            previewBody: 'A preview of the article will appear here.',
+            analysisTextBody: "A description of the article's score will appear here."
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
@@ -147,13 +150,13 @@ class Analysis extends React.Component {
                     <div id='content-cont'>
                         <StatDisplay content={this.state.stats} />
                         <div id='preview-cont'>
-                            <h1>Preview Title</h1>
-                            <p>First 400 characters</p>
+                            <h1 className='content-text-title'>{this.state.articleTitle}</h1>
+                            <p className='content-text-body'>{this.state.previewBody}</p>
                         </div>
                     </div>
                     <div id='analysis-cont'>
-                        <h1>Detailed Analysis</h1>
-                        <p>This article is biased or maybe it's not idk</p>
+                        <h1 className='content-text-title'>DETAILED ANALYSIS</h1>
+                        <p className='content-text-body'>{this.state.analysisTextBody}</p>
                     </div>
                 </div>
             </div>
