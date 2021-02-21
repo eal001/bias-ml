@@ -66,7 +66,7 @@ class Analysis extends React.Component {
 
         //console.log(this.state.url);
         //POST REQUEST FOR HTML 
-        let resH = await fetch('http://localhost:5001/biasml/us-central1/retrieveHTMLContent?url=' + this.state.url, {method: 'POST'});
+        let resH = await fetch('https://us-central1-biasml.cloudfunctions.net/retrieveHTMLContent?url=' + this.state.url, {method: 'POST'});
         await resH.json().then(data => {
             console.log("recieved data")
             console.log(data);
