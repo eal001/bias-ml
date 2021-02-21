@@ -10,7 +10,7 @@ class HowItWorks extends React.Component {
             <div>
                 <p className='text-title'>How The Application Works</p>
                 <p className='text-body'>
-                    Shut the fuck up you fucking stupid bitch, elit
+                    enter words of how here ...
                 </p>
             </div>
         )
