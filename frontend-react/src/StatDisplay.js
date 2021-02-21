@@ -12,10 +12,10 @@ function StatDisplay(props) {
             label: 'Percentage of Bias',
             data: [props.content.dem, props.content.rep],
             backgroundColor: [
-                'rgba(165, 33, 45, 0.9)',
-                'rgba(2, 12, 97, 0.9)'
+                'rgba(165, 33, 45, 0.95)',
+                'rgba(2, 12, 97, 0.95)'
             ],
-            borderColor: 'black',
+            borderColor: 'white',
             borderWidth: 2
         }]
     };

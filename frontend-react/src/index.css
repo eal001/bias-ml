@@ -11,7 +11,11 @@ body {
 }
 
 p {
-    font-family: 'Atkinson';
+    font-family: 'Helvetica';
+}
+
+h1 {
+    font-family: 'Helvetica';
 }
 
 @font-face {
@@ -92,10 +96,10 @@ a:visited {
     justify-self: left;
     transition: 0.3s all;
     position: relative;
-    font-family: 'Atkinson';
     font-style: italic;
     padding-left: 20px;
     opacity: 0.3;
+    font-family: 'Helvetica Bold';
 }
 
 .navbar-list-item-active {
@@ -130,6 +134,7 @@ a:visited {
     border: none;
     font-size: 50px;
     width: 100%;
+    color: white;
 }
 
 #urlEntry:focus {
@@ -137,13 +142,13 @@ a:visited {
 }
 
 #urlEntry::placeholder {
-    color:rgb(255, 255, 255);
+    color:rgba(255, 255, 255, 0.6);
 }
 
 #urlSubmit {
     padding-left: 30px;
     padding-right: 30px;
-    font-family: 'Atkinson';
+    font-family: 'Helvetica';
     background: transparent;
     color: white;
     border: none;
@@ -184,8 +189,8 @@ a:visited {
     top: 95%;
     height: 2px;
     background-color: white;
-    width: 0%;
-    opacity: 0;
+    width: 100%;
+    opacity: 1;
     transition: 0.2s all;
 }
 

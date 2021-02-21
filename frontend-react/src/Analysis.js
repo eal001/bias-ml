@@ -127,7 +127,7 @@ class Analysis extends React.Component {
         };
 
         this.setState({
-            stats : temp
+            stats: temp
         });
     }
     
