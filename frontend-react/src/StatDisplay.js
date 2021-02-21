@@ -1,29 +1,66 @@
 import React from "react";
-import Charts from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import tokenizer from "sbd";
 
-class StatDisplay extends React.Component {
+function StatDisplay(props) {
+    console.log('constructed stats');
+    console.log(props);
 
-    constructor(props) {
-        super();
-    }
+    const data = {
+        labels: ['Right', 'Left'],
+        datasets: [{
+            label: 'Percentage of Bias',
+            data: [props.content.dem, props.content.rep],
+            backgroundColor: [
+                'rgba(165, 33, 45, 0.8)',
+                'rgba(2, 12, 97, 0.8)'
+            ],
+            borderColor: 'black',
+            borderWitdh: 1
+        }]
+    };
+    const options = {
+        maintainAspectRatio: false,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    max: 1
+                }
+            }],
+            xAxes: []
+        },
+        legend: {
+            display: false
+        },
+        title: {
+            display: true,
+            text: 'Bias Analytics',
+            fontFamily: 'Atkinson',
+            fontSize: 30,
+            fontColor: 'black'
+        },
+        tooltips: {
+            titleFontFamily: 'Atkinson',
+            bodyFontFamily: 'Atkinson'
+        }
+    };
 
-    render() {
-        //console.log(this.props.content);
-
-        return (
-            <div>
-                <ReplaceNewlineWithBreak text={this.props.content}/>
-            </div>
-        );
-    }
+    return (
+        <div id='stat-display'>
+            <Bar
+                data={data}
+                options={options}
+            />
+        </div>
+    );
 
 }
 
 
 class ReplaceNewlineWithBreak extends React.Component {
     
-    constructor(props){
+    constructor(props) {
         super();
     }
     
@@ -38,10 +75,10 @@ class ReplaceNewlineWithBreak extends React.Component {
             sentence += "<br />"
         })
         //console.log(sentences);
-        return (<>{
+        return (<p>{
             sentences.map( (sentence, index) => {
                 return(<h3 key={index} >{sentence} <br /> </h3>)
-        })}</>)
+        })}</p>);
     }
 }
 

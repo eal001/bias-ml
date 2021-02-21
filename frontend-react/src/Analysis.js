@@ -1,6 +1,6 @@
 import React from "react";
 import StatDisplay from "./StatDisplay.js";
-import {extract, removeWhitespace, parseSentences, parseSentencesArray} from "./analyze.js";
+import { extract, removeWhitespace, parseSentences, parseSentencesArray } from "./analyze.js";
 
 /**
  * This file will be to contain all of the components that exist within the body
@@ -24,14 +24,20 @@ class Analysis extends React.Component {
             stats: {
                 max: 0,
                 min: 0,
-                ave: 0,
+                avg: 0,
                 sdev: 0,
-                med: 0
+                med: 0,
+                rep: 0,
+                dem: 0,
+                prevTitle: '',
+                prevBody: ''
             }
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleAnalyze = this.handleAnalyze.bind(this);
+
+        console.log(this.state.stats);
     }
     /**
      * we will update the url state every time the text is changed
@@ -71,38 +77,45 @@ class Analysis extends React.Component {
         this.setState({
             url: ''
         });
-        //http://localhost:5001/biasml/us-central1/predict?content= "content equlas" FOR OTHER FIREBASE FUNCT
-        fetch('http://localhost:5001/biasml/us-central1/retrieveHTMLContent?url=' + this.state.url, {method: 'POST'})
-            .then(res => res.json())
-            .then(data => {
-                console.log("firebase server response data")
-                //console.log(data);
-                let text = parseHTML(data);
-                let text_arr = parseSentencesArray(data.htmlContent);
-                this.setState({
-                    websiteContent: text,
-                    websiteSentencesArray: text_arr
-                });
-                
-            })
-            .catch(error => console.log(error));
 
-        const n = (Math.random() * 2)-1;
-        const s = (Math.random() * 2)-1;
+        //http://localhost:5001/biasml/us-central1/predict?content= "content equlas" FOR OTHER FIREBASE FUNCTION
+
+        // fetch('http://localhost:5001/biasml/us-central1/retrieveHTMLContent?url=' + this.state.url, {method: 'POST'})
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         console.log("firebase server response data")
+        //         let text = parseHTML(data);
+        //         let text_arr = parseSentencesArray(data.htmlContent);
+        //         this.setState({
+        //             websiteContent: text,
+        //             websiteSentencesArray: text_arr
+        //         });
+                
+        //     })
+        //     .catch(error => console.log(error));
+
+        const n = (Math.random() * 2) - 1;
+        const s = (Math.random() * 2) - 1;
+        const d = (Math.random());
+        const r = 1 - d;
         const temp = {
             min: -0.99,
             max: 0.99,
-            ave: n,
+            avg: n,
             sdev: s,
-            med: n-0.2
-        }
+            med: n - 0.2,
+            dem: d,
+            rep: r,
+            prevBody: 'First 400 Characters',
+            prevTitle: 'Preview Title'
+        };
+
         this.setState({
-            state : temp
-        })
-        
+            stats: temp
+        });
     }
 
-    handleAnalyze(){
+    handleAnalyze() {
         //analyze whatever contents that we just got from the backend!
         console.log(this.state.websiteSentencesArray.map());
         fetch("http://localhost:5001/biasml/us-central1/predict?content_array=" + this.state.websiteSentencesArray, {method: 'POST'})
@@ -115,15 +128,28 @@ class Analysis extends React.Component {
     }
     
     render() {
-
-        //console.log("rendering analysis page");
-        //console.log(this.state.websiteContent);
         return (
             <div id='analysis'>
-                <input id="urlEntry" type="text" placeholder={this.state.inputPlaceholder}  value={this.state.url} onChange={this.handleTextChange} />
-                <button id="urlSubmit" onClick={this.handleSubmit}> G E T C O N T E N T </button>
-                <button id="temp" onClick={this.handleAnalyze}>TEMP-ANALYZE</button>
-                <StatDisplay content={this.state.websiteContent} />
+                <div id='input-cont'>
+                    <p id='prompt-text'>URL :</p>
+                    <div id='text-cont'>
+                        <input id="urlEntry" type="text" placeholder={this.state.inputPlaceholder}  value={this.state.url} onChange={this.handleTextChange} />
+                    </div>
+                    <div id='button-cont'>
+                        <button id="urlSubmit" onClick={this.handleSubmit}>Enter</button>
+                    </div>
+                </div>
+                <div id='content-cont'>
+                    <StatDisplay content={this.state.stats} />
+                    <div id='preview-cont'>
+                        <h1>Preview Title</h1>
+                        <p>First 400 characters</p>
+                    </div>
+                </div>
+                <div id='analysis-cont'>
+                    <h1>Detailed Analysis</h1>
+                    <p>This article is biased or maybe it's not idk</p>
+                </div>
             </div>
         )
     }
