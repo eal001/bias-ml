@@ -26,11 +26,6 @@ exports.retrieveHTMLContent = functions.https.onRequest( (req, res) => {
         await page.goto(URL, {waitUntil: 'domcontentloaded'});
         console.log('website loaded');
         const pageContent = await page.content();
-        res.setHeader('Access-Control-Allow-Origin', WEBSITE_URL);
-        res.header(
-            'Access-Control-Allow-Headers',
-            'Origin, X-Requested-With, Content-Type, Accept'
-        );
         await browser.close();
         
         //PARSE HTML FOR SENTENCES
@@ -70,6 +65,11 @@ exports.retrieveHTMLContent = functions.https.onRequest( (req, res) => {
         console.log("sentences analyzed: "+content_array.length);
         console.log("returning a response");
 
+        res.setHeader('Access-Control-Allow-Origin', WEBSITE_URL);
+        res.header(
+            'Access-Control-Allow-Headers',
+            'Origin, X-Requested-With, Content-Type, Accept'
+        );
         return res.status(200).send({previewTitle: previewTitle, previewText: previewText, sentenceScores: final_response})
     });
 });
