@@ -35,9 +35,6 @@ class Analysis extends React.Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
-        // this.handleAnalyze = this.handleAnalyze.bind(this);
-
-        console.log(this.state.stats);
     }
     /**
      * we will update the url state every time the text is changed
@@ -52,7 +49,7 @@ class Analysis extends React.Component {
     /**
      * The post request for the HTML from a link will be handled here
      */
-    handleSubmit(event) {
+    async handleSubmit(event) {
 
         //post request
 
@@ -72,37 +69,33 @@ class Analysis extends React.Component {
             return;
         }
 
+        //console.log(this.state.url);
+        //POST REQUEST FOR HTML 
+        let resH = await fetch('http://localhost:5001/biasml/us-central1/retrieveHTMLContent?url=' + this.state.url, {method: 'POST'});
+        await resH.json().then(data => {
+            console.log("recieved html data")
+            //console.log(data);
+            let text = parseHTML(data);
+            let text_arr = parseHTMLArray(data);
+            this.setState({
+                websiteContent: text,
+                websiteSentencesArray: text_arr
+            });
+                
+        }).catch(error => console.log(error));
+
+        console.log(this.state.websiteSentencesArray);
+        //POST REQUEST FOR GOOGLE NATURAL LANGUAGE ML
+        let resA = await fetch("http://localhost:5001/biasml/us-central1/predict?content_array=" + this.state.websiteSentencesArray, {method: 'POST'});
+        await resA.json().then(google_data => {
+            console.log("recieved automl data");
+            console.log(google_data);
+            this.computeStats(google_data);
+        }).catch(error => console.log(error));
+
         this.setState({
             url: ''
         });
-
-        //http://localhost:5001/biasml/us-central1/predict?content= "content equlas" FOR OTHER FIREBASE FUNCTION
-
-        // fetch('http://localhost:5001/biasml/us-central1/retrieveHTMLContent?url=' + this.state.url, {method: 'POST'})
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         console.log("firebase server response data")
-        //         let text = parseHTML(data);
-        //         let text_arr = parseSentencesArray(data.htmlContent);
-        //         this.setState({
-        //             websiteContent: text,
-        //             websiteSentencesArray: text_arr
-        //         });
-                
-        //     })
-        //     .catch(error => console.log(error));
-
-        // fetch("http://localhost:5001/biasml/us-central1/predict?content_array=" + this.state.websiteSentencesArray, {method: 'POST'})
-        //     .then(res => res.json())
-        //     .then(google_data => {
-        //         console.log(google_data);
-        //         this.computeStats(google_data);
-                
-        //     })
-        //     .catch(error => console.log(error));
-
-        this.computeStats();
-        
     }
 
     /**
@@ -110,6 +103,13 @@ class Analysis extends React.Component {
      * @param {object} data google data returned from the automl call
      */
     computeStats(data){
+
+        data.sentenceScores.map( singleObject => {
+            console.log(singleObject);
+            for(let i = 0; i < singleObject.payload.length; i++ ){
+                console.log(singleObject.payload[i]);
+            }
+        })
         const n = (Math.random() * 2)-1;
         const s = (Math.random() * 2)-1;
         const d = Math.random();
@@ -132,6 +132,7 @@ class Analysis extends React.Component {
     }
     
     render() {
+
         return (
             <div id='analysis'>
                 <div id='input-cont'>
@@ -167,7 +168,7 @@ class Analysis extends React.Component {
 
  const parseHTML = (raw) => {
 
-    console.log("parsing the html for text");
+    //console.log("parsing the html for text");
     let str = extract(raw.htmlContent);
     //console.log({str});
     str = removeWhitespace(str);
@@ -177,7 +178,7 @@ class Analysis extends React.Component {
  }
 
  const parseHTMLArray = (raw) => {
-    console.log("parsing the html for array");
+    //console.log("parsing the html for array");
     let str = extract(raw.htmlContent);
     console.log({str});
     str = removeCommas(str);

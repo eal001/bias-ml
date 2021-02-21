@@ -1,4 +1,6 @@
 # bias-ml #
+remember to change credentials.json content and the .env file content when 
+switching to political bias bot
 
 ## Research Articles and References ##
 These articles were used in the information gathering process
@@ -11,4 +13,3 @@ CORS protocol
 Finding good data for training
 post requesting with an array, not just string
 calling the Google Cloud with the right credentials
- 
