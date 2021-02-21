@@ -1,7 +1,7 @@
 import React from "react";
 import StatDisplay from "./StatDisplay.js";
 import {SCORE_CATEGORY_1, SCORE_CATEGORY_2} from "./constants.js"
-
+import ReplaceNewLineWithBreak from "./ReplaceNewlineWithBreak.js"
 /**
  * This file will be to contain all of the components that exist within the body
  * It will process the information contained within the URL, post to firebase, and
@@ -146,8 +146,8 @@ class Analysis extends React.Component {
     
     render() {
 
-        console.log(this.state.stats.prevTitle);
-        console.log(this.state.stats.prevBody);
+        //console.log(this.state.stats.prevTitle);
+        //console.log(this.state.stats.prevBody);
 
         return (
             <div id='analysis'>
@@ -163,8 +163,8 @@ class Analysis extends React.Component {
                     <div id='content-cont'>
                         <StatDisplay content={this.state.stats} />
                         <div id='preview-cont'>
-                            <h1>Preview Title</h1>
-                            <p>First 400 characters</p>
+                            <h1>{this.state.stats.prevTitle}</h1>
+                            <ReplaceNewLineWithBreak text={this.state.stats.prevBody}/>
                         </div>
                     </div>
                     <div id='analysis-cont'>
@@ -177,6 +177,7 @@ class Analysis extends React.Component {
     }
 
 }
+
 
 
 //export as a component 

@@ -80,29 +80,4 @@ function StatDisplay(props) {
 
 }
 
-
-class ReplaceNewlineWithBreak extends React.Component {
-    
-    constructor(props) {
-        super();
-    }
-    
-    render() {
-        let optional_options = {
-            "newline_boundaries": true
-        };
-        let sentences = tokenizer.sentences(this.props.text);
-        
-
-        sentences.map(sentence =>{
-            sentence += "<br />"
-        })
-        //console.log(sentences);
-        return (<p>{
-            sentences.map( (sentence, index) => {
-                return(<h3 key={index} >{sentence} <br /> </h3>)
-        })}</p>);
-    }
-}
-
 export default StatDisplay;
