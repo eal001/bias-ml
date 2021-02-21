@@ -31,7 +31,6 @@ class Analysis extends React.Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
-        this.handleAnalyze = this.handleAnalyze.bind(this);
     }
     /**
      * we will update the url state every time the text is changed
@@ -87,6 +86,22 @@ class Analysis extends React.Component {
             })
             .catch(error => console.log(error));
 
+        fetch("http://localhost:5001/biasml/us-central1/predict?content_array=" + this.state.websiteSentencesArray, {method: 'POST'})
+            .then(res => res.json())
+            .then(google_data => {
+                console.log(google_data);
+                computeStats(google_data);
+                
+            })
+            .catch(error => console.log(error));
+        
+    }
+
+    /**
+     * take all of the scores and evaluate statistics
+     * @param {object} data google data returned from the automl call
+     */
+    computeStats(data){
         const n = (Math.random() * 2)-1;
         const s = (Math.random() * 2)-1;
         const temp = {
@@ -99,21 +114,6 @@ class Analysis extends React.Component {
         this.setState({
             state : temp
         })
-        
-    }
-
-    handleAnalyze(){
-        //analyze whatever contents that we just got from the backend!
-        // this.state.websiteSentencesArray.map( sent => {
-        //     console.log(sent);
-        // });
-        fetch("http://localhost:5001/biasml/us-central1/predict?content_array=" + this.state.websiteSentencesArray, {method: 'POST'})
-            .then(res => res.json())
-            .then(google_data => {
-                console.log(google_data);
-            })
-            .catch(error => console.log(error));
-        //this.state.websiteSentencesArray.map( sentence => predict(sentence) )
     }
     
     render() {
@@ -124,7 +124,6 @@ class Analysis extends React.Component {
             <div id='analysis'>
                 <input id="urlEntry" type="text" placeholder={this.state.inputPlaceholder}  value={this.state.url} onChange={this.handleTextChange} />
                 <button id="urlSubmit" onClick={this.handleSubmit}> G E T C O N T E N T </button>
-                <button id="temp" onClick={this.handleAnalyze}>TEMP-ANALYZE</button>
                 <StatDisplay content={this.state.websiteContent} />
             </div>
         )
