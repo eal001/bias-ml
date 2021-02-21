@@ -1,6 +1,7 @@
 import React from "react";
 import StatDisplay from "./StatDisplay.js";
 import {extract, removeWhitespace, parseSentences, parseSentencesArray, removeCommas} from "./analyze.js";
+import {SCORE_CATEGORY_1, SCORE_CATEGORY_2} from "./constants.js"
 
 /**
  * This file will be to contain all of the components that exist within the body
@@ -105,30 +106,34 @@ class Analysis extends React.Component {
      */
     computeStats(data){
 
+        let total1 = 0;
+        let total2 = 0;
+        let sen_count = data.sentenceScores.length;
+
         data.sentenceScores.map( singleObject => {
-            console.log(singleObject);
+            //console.log(singleObject);
             for(let i = 0; i < singleObject.payload.length; i++ ){
-                console.log(singleObject.payload[i]);
+                const score = singleObject.payload[i];
+                if(score.displayName == SCORE_CATEGORY_1){
+                    total1 = score.classification.score;
+                }
+                if(score.displayName == SCORE_CATEGORY_2){
+                    total2 = score.classification.score;
+                }
             }
         })
-        const d = (Math.random())
-        const r = 1-r;
-        const n = (Math.random() * 2)-1;
-        const s = (Math.random() * 2)-1;
+        const score1 = total1/sen_count;
+        const score2 = total2/sen_count;
+        const avg = score1 - score2;
+
         const temp = {
-            min: -0.99,
-            max: 0.99,
-            avg: n,
-            sdev: s,
-            med: n - 0.2,
-            dem: d,
-            rep: r,
-            prevBody: 'First 400 Characters',
-            prevTitle: 'Preview Title'
+            dem: score1,
+            rep: score2,
+            avg: avg,
         };
 
         this.setState({
-            state : temp
+            stat : temp
         })
     }
     
