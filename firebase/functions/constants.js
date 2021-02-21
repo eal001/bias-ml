@@ -7,7 +7,7 @@ exports.FIREBASE_CREDENTIALS = {
     appId: process.env.appId
 };
 
-exports.WEBSITE_URL = 'https://bias-ml-analysis.herokuapp.com/';
+exports.WEBSITE_URL = 'https://bias-ml-analysis.herokuapp.com';
 
 exports.GC_PROJECT_ID = process.env.GC_PROJECT_ID;
 exports.GC_COMPUTE_LOCATION = process.env.GC_COMPUTE_LOCATION;
