@@ -15,14 +15,14 @@ class ReplaceNewlineWithBreak extends React.Component {
             "newline_boundaries": true
         };
         let sentences = tokenizer.sentences(this.props.text);
-        console.log(this.props.text);
+        //console.log(this.props.text);
 
         sentences.map(sentence =>{
             sentence += "<br />"
         })
         //console.log(sentences);
         let len = 0;
-        return (<p>{
+        return (<div>{
             sentences.map( (sentence, index) => {
                 len += sentence.length
                 if(len > 400){
@@ -30,7 +30,7 @@ class ReplaceNewlineWithBreak extends React.Component {
                 }
                 return(<p key={index} >{sentence} <br /> </p>);
 
-        })}</p>);
+        })}</div>);
     }
 }
 
