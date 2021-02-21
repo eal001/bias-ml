@@ -13,6 +13,7 @@ admin.initializeApp();
 
 exports.retrieveHTMLContent = functions.https.onRequest( (req, res) => {
     const URL = req.query.url;
+    res.set('Access-Control-Allow-Origin', '*');
     
     return cors(req, res, async () => {
         
@@ -65,7 +66,7 @@ exports.retrieveHTMLContent = functions.https.onRequest( (req, res) => {
         console.log("sentences analyzed: "+content_array.length);
         console.log("returning a response");
 
-        res.setHeader('Access-Control-Allow-Origin', WEBSITE_URL);
+        res.setHeader('Access-Control-Allow-Origin', '*');
         res.header(
             'Access-Control-Allow-Headers',
             'Origin, X-Requested-With, Content-Type, Accept'

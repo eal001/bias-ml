@@ -10,7 +10,7 @@ function StatDisplay(props) {
     const data = {
         labels: [SCORE_CATEGORY_1, SCORE_CATEGORY_2],
         datasets: [{
-            label: 'Percentage of Bias',
+            label: 'Bias',
             data: [props.content.s1, props.content.s2],
             backgroundColor: [
                 'rgba(165, 33, 45, 0.95)',

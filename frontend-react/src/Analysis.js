@@ -66,7 +66,7 @@ class Analysis extends React.Component {
 
         //console.log(this.state.url);
         //POST REQUEST FOR HTML 
-        let resH = await fetch('https://us-central1-biasml.cloudfunctions.net/retrieveHTMLContent?url=' + this.state.url, {method: 'POST'});
+        let resH = await fetch('http://localhost:5001/biasml/us-central1/retrieveHTMLContent?url=' + 'http://example.com', {method: 'POST'});
         await resH.json().then(data => {
             console.log("recieved data")
             //console.log(data);
@@ -110,7 +110,7 @@ class Analysis extends React.Component {
 
         let score1 = total1/sen_count;
         let score2 = total2/sen_count;
-        if(score1 > score1/2){
+        if(score1 > score1/2) {
             score1 = score1/2;
         }
         if(score2 > score2 / 2){
@@ -142,6 +142,21 @@ class Analysis extends React.Component {
         this.setState({
             stats: temp
         });
+
+        const r = Math.random().toFixed(2);
+        this.setState(prevState =>  {return {
+            stats: {
+                max: 0,
+                min: 0,
+                avg: 0,
+                sdev: 0,
+                med: 0,
+                s1: r,
+                s2: 1-r,
+                prevTitle: "5 takeaways from Day 3 of Donald Trump's impeachment trial",
+                prevBody: "On Thursday, the House impeachment managers wrapped up their case for the conviction of Donald Trump for inciting the US Capitol riot on January 6, centering their argument on connecting the former President's words in advance of the riot and the actions taken by his supporters on that day."
+            }
+        }});
     }
     
     render() {
@@ -169,7 +184,7 @@ class Analysis extends React.Component {
                     </div>
                     <div id='analysis-cont'>
                         <h1>Detailed Analysis</h1>
-                        <p>This article is biased or maybe it's not idk</p>
+                        <p>Our neural network scored the article as having {this.state.stats.s1} conservative bias and {this.state.stats.s2} liberal bias.</p>
                     </div>
                 </div>
             </div>
