@@ -75,11 +75,18 @@ exports.predict = functions.https.onRequest( async (req , res) => {
             const [google_response] = await client.predict(google_request);
                         
             final_response.push(google_response);
-            console.log("the final Response")
+            //final_response.push(google_response);
 
         }
 
-        console.log(final_response);
+        // console.log("total resp")
+        // console.log(final_response)
+        // console.log("the final Response 1")
+        // console.log(final_response[0]);
+        // console.log("the final Response 2")
+        // console.log(final_response[1]);
+        // console.log("the final Response 3")
+        // console.log(final_response[2]);
 
         return res.status(200).send({sentenceScores: final_response})
     });
