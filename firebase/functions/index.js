@@ -33,25 +33,32 @@ exports.retrieveHTMLContent = functions.https.onRequest( (req, res) => {
     });
 });
 
-exports.predict = functions.https.onRequest(async (request , response) => {
+exports.predict = functions.https.onRequest( (req , res) => {
 
-    const content = request.query.content;
-    const client = new PredictionServiceClient();
-    console.log("got content: " + content);
-    console.log("note: b/c data types do not match up, dummy data has been substituted currently")
-    //construct the request
-    content = "i listened to kanyes new album today!";
-    console.log("dummy content: "+content);
-    const google_request = {
-        name: client.modelPath(GC_PROJECT_ID, GC_COMPUTE_LOCATION, GC_NETWORK_MODEL_ID),
-        payload: {
-            textSnippet : {
-                content: content,
-                mimeType: 'text/plain'
+    const content_array = req.query.content_array;
+    return cors(req, res, async () => {
+        const client = new PredictionServiceClient();
+        let final_response = [];
+        console.log("got content: " + content_array);
+        console.log("note: b/c data types do not match up, dummy data has been substituted currently")
+        //construct the request
+        content_array.map(async content =>{
+        
+            content = "i listened to kanyes new album today!";
+            console.log("dummy content: "+content);
+            const google_request = {
+                name: client.modelPath(GC_PROJECT_ID, GC_COMPUTE_LOCATION, GC_NETWORK_MODEL_ID),
+                payload: {
+                    textSnippet : {
+                        content: content,
+                        mimeType: 'text/plain'
+                    }
+                }
             }
-        }
-    }
-    const [google_response] = await client.predict(google_request);
+            const [google_response] = await client.predict(google_request);
+
+            final_response.push(google_response);
+        })
     //console.log(response);
     // for(const annotationPayload of response.payload){
     //     console.log(`Predicted class name: ${annotationPayload.displayName}`);
@@ -59,6 +66,7 @@ exports.predict = functions.https.onRequest(async (request , response) => {
     // }
     // console.log("finished")
 
-    return res.status(200).send({sentenceScores: google_response})
+        return res.status(200).send({sentenceScores: final_response})
+    });
 
 });

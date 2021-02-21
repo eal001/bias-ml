@@ -110,6 +110,9 @@ exports.parseSentences = function(text) {
 }
 
 exports.parseSentencesArray = function(text){
-    return tokenizer.sentences(text);
+    const sentences = tokenizer.sentences(text);
+    console.log("inside parse sentences");
+    console.log(sentences );
+    return sentences;
 }
 

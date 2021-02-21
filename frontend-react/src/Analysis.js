@@ -20,7 +20,14 @@ class Analysis extends React.Component {
             url: "",
             websiteContent: 'Stat Display',
             websiteSentencesArray: [],
-            inputPlaceholder: 'Enter URL Here'
+            inputPlaceholder: 'Enter URL Here',
+            stats: {
+                max: 0,
+                min: 0,
+                ave: 0,
+                sdev: 0,
+                med: 0
+            }
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
@@ -64,7 +71,7 @@ class Analysis extends React.Component {
         this.setState({
             url: ''
         });
-
+        //http://localhost:5001/biasml/us-central1/predict?content= "content equlas" FOR OTHER FIREBASE FUNCT
         fetch('http://localhost:5001/biasml/us-central1/retrieveHTMLContent?url=' + this.state.url, {method: 'POST'})
             .then(res => res.json())
             .then(data => {
@@ -79,11 +86,31 @@ class Analysis extends React.Component {
                 
             })
             .catch(error => console.log(error));
+
+        const n = (Math.random() * 2)-1;
+        const s = (Math.random() * 2)-1;
+        const temp = {
+            min: -0.99,
+            max: 0.99,
+            ave: n,
+            sdev: s,
+            med: n-0.2
+        }
+        this.setState({
+            state : temp
+        })
         
     }
 
     handleAnalyze(){
-        console.log("nothing yet")
+        //analyze whatever contents that we just got from the backend!
+        console.log(this.state.websiteSentencesArray.map());
+        fetch("http://localhost:5001/biasml/us-central1/predict?content_array=" + this.state.websiteSentencesArray, {method: 'POST'})
+            .then(res => res.json())
+            .then(google_data => {
+                console.log(google_data);
+            })
+            .catch(error => console.log(error));
         //this.state.websiteSentencesArray.map( sentence => predict(sentence) )
     }
     
