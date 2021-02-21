@@ -11,7 +11,11 @@ function StatDisplay(props) {
         labels: [SCORE_CATEGORY_1, SCORE_CATEGORY_2],
         datasets: [{
             label: 'Percentage of Bias',
+<<<<<<< HEAD
             data: [props.content.s1, props.content.s2],
+=======
+            data: [props.content.rep, props.content.dem],
+>>>>>>> 7c6ced5b3935104e84ae1e3b95d8a7c6eb84ac21
             backgroundColor: [
                 'rgba(165, 33, 45, 0.95)',
                 'rgba(2, 12, 97, 0.95)'
@@ -28,7 +32,8 @@ function StatDisplay(props) {
                     beginAtZero: true,
                     max: 1,
                     padding: 10,
-                    fontColor: 'white'
+                    fontColor: 'white',
+                    fontFamily: 'Helvetica'
                 },
                 gridLines: {
                     color: 'white',
@@ -39,7 +44,7 @@ function StatDisplay(props) {
                 ticks: {
                     padding: 10,
                     fontColor: 'white',
-                    fontFamily: 'Atkinson',
+                    fontFamily: 'Helvetica',
                     fontSize: 20
                 },
                 gridLines: {
@@ -54,14 +59,16 @@ function StatDisplay(props) {
         },
         title: {
             display: true,
-            text: 'Bias Analytics',
-            fontFamily: 'Atkinson',
-            fontSize: 30,
-            fontColor: 'white'
+            text: 'BIAS ANALYTICS',
+            fontFamily: 'Helvetica',
+            fontSize: 25,
+            fontColor: 'white',
+            fontStyle: 'normal',
+            position: 'top'
         },
         tooltips: {
-            titleFontFamily: 'Atkinson',
-            bodyFontFamily: 'Atkinson',
+            titleFontFamily: 'Helvetica',
+            bodyFontFamily: 'Helvetica',
             cornerRadius: 2
         }
     };

@@ -8,7 +8,8 @@ class HowItWorks extends React.Component {
     render() {
         return (
             <div>
-                <p className='text-title'>How The Application Works</p>
+                <p className='text-title'>HOW THIS TOOL WORKS</p>
+                <br/>
                 <p className='text-body'>
                     enter words of how here ...
                 </p>
