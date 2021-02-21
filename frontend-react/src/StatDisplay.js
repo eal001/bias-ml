@@ -59,6 +59,7 @@ function StatDisplay(props) {
             fontSize: 25,
             fontColor: 'white',
             fontStyle: 'normal',
+            position: 'top'
         },
         tooltips: {
             titleFontFamily: 'Helvetica',
