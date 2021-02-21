@@ -1,6 +1,10 @@
 import React from "react";
 import StatDisplay from "./StatDisplay.js";
+<<<<<<< HEAD
 import { extract, removeWhitespace, parseSentences, parseSentencesArray } from "./analyze.js";
+=======
+import {extract, removeWhitespace, parseSentences, parseSentencesArray, removeCommas} from "./analyze.js";
+>>>>>>> 6f5a4ce0e126ba425d97c1ad3f513a1ee9b72ccb
 
 /**
  * This file will be to contain all of the components that exist within the body
@@ -35,9 +39,12 @@ class Analysis extends React.Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
+<<<<<<< HEAD
         this.handleAnalyze = this.handleAnalyze.bind(this);
 
         console.log(this.state.stats);
+=======
+>>>>>>> 6f5a4ce0e126ba425d97c1ad3f513a1ee9b72ccb
     }
     /**
      * we will update the url state every time the text is changed
@@ -94,10 +101,24 @@ class Analysis extends React.Component {
         //     })
         //     .catch(error => console.log(error));
 
-        const n = (Math.random() * 2) - 1;
-        const s = (Math.random() * 2) - 1;
-        const d = (Math.random());
-        const r = 1 - d;
+        fetch("http://localhost:5001/biasml/us-central1/predict?content_array=" + this.state.websiteSentencesArray, {method: 'POST'})
+            .then(res => res.json())
+            .then(google_data => {
+                console.log(google_data);
+                computeStats(google_data);
+                
+            })
+            .catch(error => console.log(error));
+        
+    }
+
+    /**
+     * take all of the scores and evaluate statistics
+     * @param {object} data google data returned from the automl call
+     */
+    computeStats(data){
+        const n = (Math.random() * 2)-1;
+        const s = (Math.random() * 2)-1;
         const temp = {
             min: -0.99,
             max: 0.99,
@@ -111,20 +132,8 @@ class Analysis extends React.Component {
         };
 
         this.setState({
-            stats: temp
-        });
-    }
-
-    handleAnalyze() {
-        //analyze whatever contents that we just got from the backend!
-        console.log(this.state.websiteSentencesArray.map());
-        fetch("http://localhost:5001/biasml/us-central1/predict?content_array=" + this.state.websiteSentencesArray, {method: 'POST'})
-            .then(res => res.json())
-            .then(google_data => {
-                console.log(google_data);
-            })
-            .catch(error => console.log(error));
-        //this.state.websiteSentencesArray.map( sentence => predict(sentence) )
+            state : temp
+        })
     }
     
     render() {
@@ -162,13 +171,25 @@ class Analysis extends React.Component {
 
  const parseHTML = (raw) => {
 
-    console.log("parsing the html")
+    console.log("parsing the html for text");
     let str = extract(raw.htmlContent);
     //console.log({str});
     str = removeWhitespace(str);
     //console.log({str});
     str = parseSentences(str);
     return str;
+ }
+
+ const parseHTMLArray = (raw) => {
+    console.log("parsing the html for array");
+    let str = extract(raw.htmlContent);
+    console.log({str});
+    str = removeCommas(str);
+    console.log(str)
+    str = removeWhitespace(str);
+    //console.log({str});
+    const arr = parseSentencesArray(str);
+    return arr;
  }
 
 /**

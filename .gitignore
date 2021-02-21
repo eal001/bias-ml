@@ -7,10 +7,10 @@ automl/convote_v1.1/*
 
 firebase/node_modules
 firebase/functions/.env
+firebase/functions/credentials.json
 
 frontend-react/node_modules
 frontend-react/.eslintcache
 frontend-react/.env
-frontend-react/credentials.json
 
 ./workspace.code-workspace
