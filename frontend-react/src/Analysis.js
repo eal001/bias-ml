@@ -86,6 +86,9 @@ class Analysis extends React.Component {
      */
     computeStats(data){
 
+        //console.log(data.previewText);
+        //console.log(data.previewTitle);
+
         let total1 = 0;
         let total2 = 0;
         let sen_count = data.sentenceScores.length;
@@ -124,7 +127,7 @@ class Analysis extends React.Component {
             min: 0,
             sdev: 0,
             med: 0,
-            prevTitle: '',
+            prevTitle: data.previewTitle,
             prevBody: data.previewText
 
         };
@@ -142,6 +145,9 @@ class Analysis extends React.Component {
     }
     
     render() {
+
+        console.log(this.state.stats.prevTitle);
+        console.log(this.state.stats.prevBody);
 
         return (
             <div id='analysis'>

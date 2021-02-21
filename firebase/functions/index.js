@@ -32,34 +32,28 @@ exports.retrieveHTMLContent = functions.https.onRequest( (req, res) => {
             'Origin, X-Requested-With, Content-Type, Accept'
         );
         await browser.close();
-        //return res.status(200).send({htmlContent: pageContent});
         
         //PARSE HTML FOR SENTENCES
         
         console.log("parsing html");
-        let str = extract(pageContent);
-        str = removeWhitespace(str);
-        const previewText = parseSentences(str) // THIS IS SAVED FOR LATER
+        let {title, body}  = extract(pageContent);
+        body = removeWhitespace(body);
+        const previewText = parseSentences(body) // THIS IS SAVED FOR LATER
+        const previewTitle = title; //THIS IS SAVED FOR LATER
         console.log("created preview");
-        str = removeCommas(str);
-        const content_array = parseSentencesArray(str);
+        body = removeCommas(body);
+        const content_array = parseSentencesArray(body);
         console.log("created natural language query");
 
         //NOW TAKE SENTENCES AND SEND TO AUTOML
         const client = new PredictionServiceClient();
         let final_response = [];
-        //console.log("got content: " + content_array);
-        //console.log(typeof content_array);
-        //console.log("note: b/c data types do not match up, dummy data has been substituted currently")
-        //construct the request
+        
         console.log("posting query");
-        //console.log(content_array);
         
         for(let i = 0; i < content_array.length; i++){
             let content = content_array[i];
-            //console.log("true sentence:" + content);
-            //content = "i listened to kanyes new album today!";
-            //console.log("dummy content: "+content);
+            
             const google_request = {
                 name: client.modelPath(GC_PROJECT_ID, GC_COMPUTE_LOCATION, GC_NETWORK_MODEL_ID),
                 payload: {
@@ -85,7 +79,7 @@ exports.retrieveHTMLContent = functions.https.onRequest( (req, res) => {
         // console.log("the final Response 3")
         // console.log(final_response[2]);
 
-        return res.status(200).send({previewText: previewText, sentenceScores: final_response})
+        return res.status(200).send({previewTitle: previewTitle, previewText: previewText, sentenceScores: final_response})
     });
 });
 
