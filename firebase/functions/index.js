@@ -33,17 +33,34 @@ exports.retrieveHTMLContent = functions.https.onRequest( (req, res) => {
     });
 });
 
-exports.predict = functions.https.onRequest( (req , res) => {
+exports.predict = functions.https.onRequest( async (req , res) => {
 
-    const content_array = req.query.content_array;
+    const str = req.query.content_array;
+    let sentence = "";
+    let content_array = [];
+    
+
+    for (let i = 0 ; i < str.length ; i++) {
+        
+        if (str[i] == ',') {
+            content_array.push(sentence);
+            sentence = "";
+        }
+        sentence += str[i];
+    }
+    content_array.push(sentence);
+    console.log(content_array);
+    let final_response = [];
+    
     return cors(req, res, async () => {
         const client = new PredictionServiceClient();
-        let final_response = [];
-        console.log("got content: " + content_array);
+        //console.log("got content: " + content_array);
+        //console.log(typeof content_array);
         console.log("note: b/c data types do not match up, dummy data has been substituted currently")
         //construct the request
-        content_array.map(async content =>{
-        
+        for(let i = 0; i < content_array.length; i++){
+            let content = content_array[i];
+            console.log("true sentence:" + content);
             content = "i listened to kanyes new album today!";
             console.log("dummy content: "+content);
             const google_request = {
@@ -56,15 +73,13 @@ exports.predict = functions.https.onRequest( (req , res) => {
                 }
             }
             const [google_response] = await client.predict(google_request);
-
+                        
             final_response.push(google_response);
-        })
-    //console.log(response);
-    // for(const annotationPayload of response.payload){
-    //     console.log(`Predicted class name: ${annotationPayload.displayName}`);
-    //     console.log(`     Predicted score: ${annotationPayload.classification.score} `);
-    // }
-    // console.log("finished")
+            console.log("the final Response")
+
+        }
+
+        console.log(final_response);
 
         return res.status(200).send({sentenceScores: final_response})
     });

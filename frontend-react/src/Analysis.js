@@ -1,6 +1,6 @@
 import React from "react";
 import StatDisplay from "./StatDisplay.js";
-import {extract, removeWhitespace, parseSentences, parseSentencesArray} from "./analyze.js";
+import {extract, removeWhitespace, parseSentences, parseSentencesArray, removeCommas} from "./analyze.js";
 
 /**
  * This file will be to contain all of the components that exist within the body
@@ -78,7 +78,7 @@ class Analysis extends React.Component {
                 console.log("firebase server response data")
                 //console.log(data);
                 let text = parseHTML(data);
-                let text_arr = parseSentencesArray(data.htmlContent);
+                let text_arr = parseHTMLArray(data);
                 this.setState({
                     websiteContent: text,
                     websiteSentencesArray: text_arr
@@ -104,7 +104,9 @@ class Analysis extends React.Component {
 
     handleAnalyze(){
         //analyze whatever contents that we just got from the backend!
-        console.log(this.state.websiteSentencesArray.map());
+        // this.state.websiteSentencesArray.map( sent => {
+        //     console.log(sent);
+        // });
         fetch("http://localhost:5001/biasml/us-central1/predict?content_array=" + this.state.websiteSentencesArray, {method: 'POST'})
             .then(res => res.json())
             .then(google_data => {
@@ -136,13 +138,25 @@ class Analysis extends React.Component {
 
  const parseHTML = (raw) => {
 
-    console.log("parsing the html")
+    console.log("parsing the html for text");
     let str = extract(raw.htmlContent);
     //console.log({str});
     str = removeWhitespace(str);
     //console.log({str});
     str = parseSentences(str);
     return str;
+ }
+
+ const parseHTMLArray = (raw) => {
+    console.log("parsing the html for array");
+    let str = extract(raw.htmlContent);
+    console.log({str});
+    str = removeCommas(str);
+    console.log(str)
+    str = removeWhitespace(str);
+    //console.log({str});
+    const arr = parseSentencesArray(str);
+    return arr;
  }
 
 /**
