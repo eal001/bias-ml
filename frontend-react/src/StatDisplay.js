@@ -7,16 +7,16 @@ function StatDisplay(props) {
     console.log(props);
 
     const data = {
-        labels: ['Right', 'Left'],
+        labels: ['Republican', 'Democratic'],
         datasets: [{
             label: 'Percentage of Bias',
             data: [props.content.dem, props.content.rep],
             backgroundColor: [
-                'rgba(165, 33, 45, 0.8)',
-                'rgba(2, 12, 97, 0.8)'
+                'rgba(165, 33, 45, 0.95)',
+                'rgba(2, 12, 97, 0.95)'
             ],
-            borderColor: 'black',
-            borderWitdh: 1
+            borderColor: 'white',
+            borderWidth: 2
         }]
     };
     const options = {
@@ -25,10 +25,28 @@ function StatDisplay(props) {
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
-                    max: 1
+                    max: 1,
+                    padding: 10,
+                    fontColor: 'white'
+                },
+                gridLines: {
+                    color: 'white',
+                    zeroLineColor: 'white'
                 }
             }],
-            xAxes: []
+            xAxes: [{
+                ticks: {
+                    padding: 10,
+                    fontColor: 'white',
+                    fontFamily: 'Atkinson',
+                    fontSize: 20
+                },
+                gridLines: {
+                    color: 'white',
+                    zeroLineColor: 'white',
+                    tickMarkLength: 0
+                }
+            }]
         },
         legend: {
             display: false
@@ -38,11 +56,12 @@ function StatDisplay(props) {
             text: 'Bias Analytics',
             fontFamily: 'Atkinson',
             fontSize: 30,
-            fontColor: 'black'
+            fontColor: 'white'
         },
         tooltips: {
             titleFontFamily: 'Atkinson',
-            bodyFontFamily: 'Atkinson'
+            bodyFontFamily: 'Atkinson',
+            cornerRadius: 2
         }
     };
 
