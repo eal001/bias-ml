@@ -39,3 +39,6 @@ UX/UI Design
 
 ## What's next for bias-ml
 We plan to retrain our neural network on a more varied dataset that is better parsed and edited for the task at hand. We would like to deploy the website to a hosting service without error. In addition, we would like to create and use a sentiment detection model that can help decide whether the subjects in the sentence are viewed positively or negatively. We would also like to create a google chrome extension that can be downloaded from our webpage.
+
+# Link to Live Version
+https://bias-ml-analysis.herokuapp.com/
